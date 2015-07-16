@@ -1,14 +1,38 @@
 h1 {
-  margin-left: 20px;
+  font-size: 3em;
   font-family: 'Permanent Marker', cursive;
-  /*transform: rotateY(180deg);*/
-  /*transform: rotateZ(45deg);*/
+  transform: rotate(-0.1turn);
+  margin: 2em 0em 0em 7em;
+  padding: 0;
+  width: 60px;
 }
 
 body {
-  background-color: yellow;
+  background: url("http://www.hdwallpapersinn.com/wp-content/uploads/2014/11/New-Zealand-Scenery-HD-Wallpapers-1280x800-3.jpg");
+  /*background: url("http://media.royalcaribbean.com/content/shared_assets/images/ports/hero/MFN_01.jpg");*/
+  -webkit-background-size: cover;
 }
 
+#turns {
+  /*fon: white solid;*/
+  font-size: 2em;
+  color: white;
+}
+
+#box {
+  clear: both;
+  /*float: left;*/
+  max-width: 500px;
+  max-height: 500px;
+
+  width: 500px;
+  height: 500px;
+
+  margin: 0px auto 30px  auto;
+  border: black dotted;
+  padding: 0px;
+  background-color: black;
+}
 
 #title_row_1, #title_row_2, #title_row_3, #title_row_4 {
   clear: both;
@@ -24,13 +48,15 @@ body {
   margin: 0px;
   padding: 0px;
   
-  width: 25%;
-  height: 100%;
+  width: 23.75%;
+  height: 95%;
 
   background: rgb(129, 132, 132);
   background-size: cover;
   transition:all 1s linear;
 
+  border-radius: 1%;
+  border: white solid;
 }
 .transformClass {
   transform:rotateX(180deg) rotateY(180deg) rotateZ(180deg);
@@ -76,20 +102,6 @@ body {
   background: url("http://www.chinesetown.co.nz/images_news/nzlocal/nzmadelarge.png");
    background-position: center;
   background-size: cover;
-}
-
-#box {
-  clear: both;
-  max-width: 500px;
-  max-height: 500px;
-
-  width: 500px;
-  height: 500px;
-
-  margin: 100px 50px;
-  border: black dotted;
-  padding: 0px;
-  background-color: black;
 }
 
 

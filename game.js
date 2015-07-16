@@ -42,13 +42,7 @@ $("#title_row_1, #title_row_2, #title_row_3, #title_row_4").on('click', 'div', f
 
 var turn_Over = function(image_chosen) {
 
-  score = score + 1
-  var str_Score = document.getElementById("Turns")
-  str_Score.innerHTML = 'Turn_test'
-
-  // console.log(str_Score)
-  // console.log(score)
- 
+  var str_Score = document.getElementById("turns")
 
   //Assign images
   if (first_tile == undefined) {
@@ -57,6 +51,9 @@ var turn_Over = function(image_chosen) {
   } else if (second_tile == undefined) {
     second_tile = event.target;
     second_image_chosen = image_chosen;
+    //Record score
+    score = score + 1
+    str_Score.innerHTML = 'Turns taken: ' + score 
   }
 
   var e = event;
@@ -65,10 +62,10 @@ var turn_Over = function(image_chosen) {
 
       //Count number of tiles turned over
       tiles_Turned_Over = tiles_Turned_Over + 1;
-
+      $(e.target).addClass('transformClass');
       setTimeout(function() {
         //Can only turn over more if there is no more than 2
-        $(e.target).addClass('transformClass');
+      
         $(e.target).addClass(image_chosen); 
       }, 500);
   }
