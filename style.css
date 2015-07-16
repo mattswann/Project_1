@@ -1,6 +1,8 @@
 h1 {
   margin-left: 20px;
   font-family: 'Permanent Marker', cursive;
+  /*transform: rotateY(180deg);*/
+  /*transform: rotateZ(45deg);*/
 }
 
 body {
@@ -16,7 +18,6 @@ body {
 }
 
 .row_1, .row_2, .row_3, .row_4 {
-  /*display: inline-block;*/
   float: left;
   /*overflow: hidden;*/
 
@@ -26,7 +27,7 @@ body {
   width: 25%;
   height: 100%;
 
-  background: blue;
+  background: rgb(129, 132, 132);
   background-size: cover;
   transition:all 1s linear;
 
@@ -43,8 +44,6 @@ body {
 .wellington {
   background: url("http://www.ecampervanhire.com/wp-content/uploads/wellington.jpeg");
   background-size: cover;
-  /*background-size: contain;
-  background-position: center;*/
 }
 
 .fishhook {
@@ -64,7 +63,6 @@ body {
 
 .paua {
   background: url("http://cdn.shopify.com/s/files/1/0180/5061/products/WV1-1l_1024x1024.jpg?v=1389644220");
-  background-size: cover;
   background-size: contain;
 }
 
@@ -75,10 +73,8 @@ body {
 }
 
 .kiwi {
-  background: url("http://ih1.redbubble.net/image.4431252.5635/fc,220x200,white.jpg");
-  background-position: center;
-    background-size: contain;
-      /*background: url("http://www.myriahsbazaar.com/v/vspfiles/photos/S229-2.jpg");*/
+  background: url("http://www.chinesetown.co.nz/images_news/nzlocal/nzmadelarge.png");
+   background-position: center;
   background-size: cover;
 }
 

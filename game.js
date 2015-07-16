@@ -1,4 +1,5 @@
 var images_selection = ['fern', 'wellington', 'fishhook', 'sheep', 'allblacks', 'paua', 'tiki', 'kiwi']
+
 var images_Count = {
   fern: 0, 
   wellington: 0,
@@ -30,28 +31,97 @@ var tiles = {
 }
 
 var tiles_Turned_Over = 0;
-
+var first_tile;
+var second_tile;
+var first_image_chosen; 
+var second_image_chosen;
+var score = 0
 $("#title_row_1, #title_row_2, #title_row_3, #title_row_4").on('click', 'div', function() {
     select_Image()
 });
 
 var turn_Over = function(image_chosen) {
-  $(event.target).addClass('transformClass');
+
+  score = score + 1
+  var str_Score = document.getElementById("Turns")
+  str_Score.innerHTML = 'Turn_test'
+
+  // console.log(str_Score)
+  // console.log(score)
+ 
+
+  //Assign images
+  if (first_tile == undefined) {
+    first_tile = event.target;
+    first_image_chosen = image_chosen;
+  } else if (second_tile == undefined) {
+    second_tile = event.target;
+    second_image_chosen = image_chosen;
+  }
 
   var e = event;
-  setTimeout(function() {
-    $(e.target).addClass(image_chosen); 
-    tiles_Turned_Over = tiles_Turned_Over + 1;
-  }, 500);
+  
+  if (tiles_Turned_Over < 2) {
 
-  setTimeout(function() {
-    $(e.target).removeClass(image_chosen); 
-    $(e.target).removeClass('transformClass'); 
-  }, 5000);
+      //Count number of tiles turned over
+      tiles_Turned_Over = tiles_Turned_Over + 1;
+
+      setTimeout(function() {
+        //Can only turn over more if there is no more than 2
+        $(e.target).addClass('transformClass');
+        $(e.target).addClass(image_chosen); 
+      }, 500);
+  }
+
+  //Turn back in 5 seconds when you have turn over 2 tiles
+  if (tiles_Turned_Over > 1) {
+
+      // ccheck if you have a pair 
+      if (first_image_chosen !== second_image_chosen) {
+        setTimeout(function() {
+            //Turn back over tiles 
+            $(first_tile).removeClass(first_image_chosen);
+            $(first_tile).removeClass('transformClass'); 
+            $(second_tile).removeClass(second_image_chosen); 
+            $(second_tile).removeClass('transformClass');
+            //reset variables
+            first_tile = undefined
+            first_image_chosen = undefined
+            second_tile = undefined
+            second_image_chosen = undefined
+            //Reset number of tiles turned over
+            tiles_Turned_Over = 0;
+        }, 3000);
+      } else {
+            $(first_tile).addClass('paired');
+            $(first_tile).addClass('paired');
+             //reset variables
+            first_tile = undefined
+            first_image_chosen = undefined
+            second_tile = undefined
+            second_image_chosen = undefined
+            //Reset number of tiles turned over
+            tiles_Turned_Over = 0;       
+      }
+      
+  }
 }
 
 var select_Image = function() {
     var tileID = event.target.id;
+
+    //Stop if clicking on a pair
+    if ($(event.target).hasClass('paired') ) { 
+      return console.log('stopped')
+    }
+    //Stop if continued clicking 
+    if (tiles_Turned_Over >=2) { 
+      return console.log('stopped')
+    }
+    //Stop if continued clicking  on first tile
+    if ((first_tile == event.target) || (second_tile == event.target)) {
+      return console.log('stopped')
+    }
 
     // Has previously been turned over - Not assigned yet
     if ($(event.target).hasClass('assigned') ) {  
