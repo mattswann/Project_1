@@ -35,14 +35,33 @@ var first_tile;
 var second_tile;
 var first_image_chosen; 
 var second_image_chosen;
-var score = 0
+
+var str_Score_player_one = document.getElementById("player_one");
+var str_Score_player_two = document.getElementById("player_two");
+var str_StartAnnounce = document.getElementById('start_announce');
+var str_EndAnnounce = document.getElementById('end_announce');
+var str_GameOver = document.getElementById('GameOver');
+var str_EndOFGame = document.getElementById('EndScore');
+
+var score = 0;
+var player1Score = 0;
+var player2Score = 0;
+
+var num_Players = document.getElementById("player_num").value;
+var str_Score = document.getElementById("turns");
+var current_player = 1;
+
+
 $("#title_row_1, #title_row_2, #title_row_3, #title_row_4").on('click', 'div', function() {
     select_Image()
 });
 
-var turn_Over = function(image_chosen) {
+$("#title_row_1, #title_row_2, #title_row_3, #title_row_4").on('click', 'div', function() {
+    select_Image()
+});
 
-  var str_Score = document.getElementById("turns")
+
+var turn_Over = function(image_chosen) {
 
   //Assign images
   if (first_tile == undefined) {
@@ -53,7 +72,7 @@ var turn_Over = function(image_chosen) {
     second_image_chosen = image_chosen;
     //Record score
     score = score + 1
-    str_Score.innerHTML = 'Turns taken: ' + score 
+    str_Score.innerHTML = 'Turns taken: ' + score
   }
 
   var e = event;
@@ -91,7 +110,7 @@ var turn_Over = function(image_chosen) {
         }, 3000);
       } else {
             $(first_tile).addClass('paired');
-            $(first_tile).addClass('paired');
+            $(second_tile).addClass('paired');
              //reset variables
             first_tile = undefined
             first_image_chosen = undefined
@@ -102,6 +121,7 @@ var turn_Over = function(image_chosen) {
       }
       
   }
+  checkIf_game_over()
 }
 
 var select_Image = function() {
@@ -130,7 +150,7 @@ var select_Image = function() {
     } else {
         var image_chosen = random_Selection()
         var currentCount = images_Count[image_chosen]
-          
+          console.log('blah');
           //Image already used twice, reselect
           if (currentCount >=2 ){
               select_Image()
@@ -150,7 +170,142 @@ var random_Selection = function() {
     return image_chosen
 }
 
+var checkIf_game_over = function() {
+  console.log('checkiing')
+  var all_Paired = true;
+  
+  //Check if all tiles are paired
+  _.each(tiles, function(row,tile_row,c) { 
+    
+           div_id = '#' + tile_row
+          if ($(div_id).hasClass('paired') ) {
+          } else {
+              all_Paired = false
+          }
+  })
 
+  //Game has ended
+  if (all_Paired) {
+
+      //1 Player Game
+      if (num_Players == 'one_Player') {
+            str_Score_player_one.innerHTML = 'Player 1: ' + score
+            player1Score = score
+            //End of Game
+            $("#end_announce").removeClass('index_back');
+            $("#end_announce").addClass('index_front');
+            str_EndOFGame.innerHTML = 'Your score is: ' + player1Score
+      //2 Player Game
+      } else if (num_Players == 'two_Player') {
+
+            if (current_player == 1) {
+                str_Score_player_one.innerHTML = 'Player 1: ' + score
+                player1Score = score
+                $("#start_announce").removeClass('index_back');
+                $("#start_announce").addClass('index_front');
+                str_StartAnnounce.innerHTML = "Player 2's turn"
+                      //reset board
+                      setTimeout(function() {
+                          _.each(tiles, function(row,tile_row,c) { 
+                                tiles_Turned_Over = 0
+                                  if (tiles[tile_row] !== '') {
+                                      //remove assigned class 
+                                       div_id = '#' + tile_row
+                                      $(div_id).removeClass(tiles[tile_row]);
+                                      $(div_id).removeClass('assigned');
+                                      $(div_id).removeClass('transformClass');
+                                      //reset object
+                                      tiles[tile_row] = ''
+                                      if ($(div_id).hasClass('paired') ) {
+                                          //remove paired class
+                                          $(div_id).removeClass('paired');
+                                      }
+                                  }
+                          })
+                          _.each(images_Count, function(image_num,image_Key,c) { 
+                                // console.log(tile_row)
+                                images_Count[image_Key] = 0;
+                          })
+                          score = 0;
+                          str_Score.innerHTML = 'Turns taken: ' + score; 
+                          $("#start_announce").removeClass('index_front');
+                          $("#start_announce").addClass('index_back');
+                      }, 5000);
+                      //--------------
+                current_player = 2
+            } else {
+              console.log('declare winer')
+                $("#end_announce").removeClass('index_back');
+                $("#end_announce").addClass('index_front');
+                str_StartAnnounce.innerHTML = "Start game!"
+
+                str_Score_player_two.innerHTML = 'Player 2: ' + score
+                player2Score = score
+                //End of Game
+                if (player1Score<player2Score) {
+                  str_GameOver.innerHTML = 'Game Over! Player 1 wins'
+                } else {
+                  str_GameOver.innerHTML = 'Game Over! Player 2 wins'
+                }
+
+                $("#end_announce").removeClass('index_back');
+                $("#end_announce").addClass('index_front');
+                str_EndOFGame.innerHTML = 'Scores: Player 1:' + player1Score + '  Player 2:' + player2Score
+            }
+            
+      }
+
+  }
+              
+}
+
+var reset_btn = function() {
+  _.each(tiles, function(row,tile_row,c) { 
+        // console.log(tile_row)
+        tiles_Turned_Over = 0
+          if (tiles[tile_row] !== '') {
+              //remove assigned class 
+              console.log(tile_row)
+               console.log(tiles[tile_row])
+               div_id = '#' + tile_row
+              $(div_id).removeClass(tiles[tile_row]);
+              $(div_id).removeClass('assigned');
+              $(div_id).removeClass('transformClass');
+              //reset object
+              tiles[tile_row] = ''
+              if ($(div_id).hasClass('paired') ) {
+                  //remove paired class
+                  $(div_id).removeClass('paired');
+              }
+          }
+  })
+  _.each(images_Count, function(image_num,image_Key,c) { 
+        // console.log(tile_row)
+        images_Count[image_Key] = 0;
+  })
+  score = 0;
+  player1Score = 0;
+  player2Score = 0;
+  str_Score_player_one.innerHTML = 'Player 1: '
+  str_Score_player_two.innerHTML = 'Player 2: '
+  str_Score.innerHTML = 'Turns taken: ' + score
+
+  str_GameOver.innerHTML = 'Game Over!'
+
+  $("#start_announce").removeClass('index_front');
+  $("#start_announce").addClass('index_back');
+  $("#end_announce").removeClass('index_front');
+  $("#end_announce").addClass('index_back');
+}
+
+$("#btn").on('click', function() {
+    reset_btn()
+});
+
+$("#player_num").on('change', function() {
+      num_Players = document.getElementById("player_num").value
+          reset_btn()
+});
 
   // $('.row_1, .row_2, .row_3, .row_4').addClass('fern');
 
@@ -179,19 +334,3 @@ var random_Selection = function() {
 
 // submitButton.addEventListener('click', dothis)
 
-// var tiles = [
-//   ['blanc','blanc','blanc','blanc'],
-//   ['blanc','blanc','blanc','blanc'],
-//   ['blanc','blanc','blanc','blanc'],
-//   ['blanc','blanc','blanc','blanc']
-// ]
-
-// var assign_tiles = function() {
-//   _.each(tiles, function(row,tile_row,c) { 
-      
-//       _.each(row, function(row,tile_column,e) { 
-
-//           console.log(tile_row,tile_column)
-//       })
-//   })
-// }

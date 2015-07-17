@@ -4,16 +4,39 @@
   <meta charset="UTF-8">
   <title>Document</title>
   <link href='http://fonts.googleapis.com/css?family=Permanent+Marker' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Roboto:500' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Signika:700' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="style.css">
 
   <script src="Underscore.js"> </script>
 </head>
 <body>
 
-  <h1>Memory</h1>
+  <div id="top_part">
+      <div class='top_bit' id='memory'>Kia Ora</div>
+      <div class='top_bit' id='game_param'>
+          <p>
+            <label class = "players" for="players" id="player_label" >Select no# of players:</label>
+            <select class = "players" name="players" id="player_num">
+                <option value="one_Player">1</option>
+                <option value="two_Player">2</option>
+            </select>
+          </p>
 
-  <div id="turns">Turns Taken: 0</div>
+          <div>
+              <div class='scores_n_btn' id='scores'>
+                <div id="turns">Turns Taken: 0</div>
+                <div id='score_title'>scores</div>
+                <div id='best_score'>Best Score:</div>
+                <div id="player_one">Player 1: </div>
+                <div id="player_two">Player 2: </div>
+              </div>
 
+              <button class='scores_n_btn' id="btn">RESET</button>
+          </div>
+      </div>
+  </div>
+  
   <div id="box">    
     <div id="title_row_1">
         <div class="row_1" id="R1_box_1"></div><!--
@@ -40,7 +63,15 @@
      --><div class="row_4" id="R4_box_4"></div>
     </div>
     <!--  -->
+  </div>
 
+  <div class="index_back" id="start_announce">
+    'Start game!'
+  </div>
+
+  <div class="index_back" id="end_announce">
+    <p id ='GameOver'>Game Over!</p>
+    <p id='EndScore'> </p>
   </div>
 
 </body>
