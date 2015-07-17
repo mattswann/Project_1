@@ -51,6 +51,12 @@ var num_Players = document.getElementById("player_num").value;
 var str_Score = document.getElementById("turns");
 var current_player = 1;
 
+var str_best_score = document.getElementById('best_score');
+
+if (localStorage['Best_Score'] === undefined) {  
+  localStorage.setItem('Best_Score', 100);
+}
+str_best_score.innerHTML = 'Best Score: ' + localStorage.getItem('Best_Score') 
 
 $("#title_row_1, #title_row_2, #title_row_3, #title_row_4").on('click', 'div', function() {
     select_Image()
@@ -195,6 +201,11 @@ var checkIf_game_over = function() {
             $("#end_announce").removeClass('index_back');
             $("#end_announce").addClass('index_front');
             str_EndOFGame.innerHTML = 'Your score is: ' + player1Score
+
+            if (player1Score < localStorage['Best_Score']) {
+              localStorage['Best_Score']  = player1Score
+              str_best_score.innerHTML = 'Best Score: ' + player1Score
+            }
       //2 Player Game
       } else if (num_Players == 'two_Player') {
 
@@ -244,8 +255,16 @@ var checkIf_game_over = function() {
                 //End of Game
                 if (player1Score<player2Score) {
                   str_GameOver.innerHTML = 'Game Over! Player 1 wins'
+                    if (player1Score < localStorage['Best_Score']) {
+                      localStorage['Best_Score']  = player1Score
+                      str_best_score.innerHTML = 'Best Score: ' + player1Score
+                    }
                 } else {
                   str_GameOver.innerHTML = 'Game Over! Player 2 wins'
+                    if (player2Score < localStorage['Best_Score']) {
+                      localStorage['Best_Score']  = player2Score
+                      str_best_score.innerHTML = 'Best Score: ' + player2Score
+                    }
                 }
 
                 $("#end_announce").removeClass('index_back');
