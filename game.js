@@ -1,3 +1,4 @@
+// comments in description cheers MS
 var images_selection = ['fern', 'wellington', 'fishhook', 'sheep', 'allblacks', 'paua', 'tiki', 'kiwi']
 
 var images_Count = {
